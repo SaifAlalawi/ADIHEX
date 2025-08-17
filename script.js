@@ -1,7 +1,10 @@
-const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbzNz9mL_HReZLi71HjIV2ux_JS5jPIxo9tbnhfZhgPfsa1vEl8Q9AGpGj1bL4RyM-k/exec";
-
-const arabicMonths = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
-const arabicWeekdays = ["الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت","الأحد"];
+const arabicMonths = [
+  "يناير","فبراير","مارس","أبريل","مايو","يونيو",
+  "يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"
+];
+const arabicWeekdays = [
+  "الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت","الأحد"
+];
 
 function formatArabicDate(d) {
   const date = new Date(d);
@@ -85,46 +88,47 @@ allDaysCheckbox.addEventListener("change", ()=>{
   });
 });
 
-// Form submit مع إرسال Google Sheets
-form.addEventListener("submit", async e=>{
+// Form submit
+form.addEventListener("submit", e=>{
   e.preventDefault();
-
+  let valid = true;
   errorName.textContent = "";
   errorUID.textContent = "";
   errorDays.textContent = "";
 
-  let valid = true;
-  if(!nameInput.value.trim()){ errorName.textContent="الاسم مطلوب"; valid=false; }
-  if(!uidInput.value.trim()){ errorUID.textContent="الرقم الجامعي مطلوب"; valid=false; }
-  if(selectedDays.length===0){ errorDays.textContent="اختر يومًا واحدًا على الأقل"; valid=false; }
+  if(!nameInput.value.trim()){
+    errorName.textContent = "الاسم مطلوب";
+    valid=false;
+  }
+  if(!uidInput.value.trim()){
+    errorUID.textContent = "الرقم الجامعي مطلوب";
+    valid=false;
+  }
+  if(selectedDays.length===0){
+    errorDays.textContent="اختر يومًا واحدًا على الأقل";
+    valid=false;
+  }
+
   if(!valid) return;
 
+  // Save locally
   try {
-    const res = await fetch(GOOGLE_SHEET_URL, {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({name:nameInput.value, uid:uidInput.value, selectedDays})
-    });
-    const data = await res.json();
+    const prev = JSON.parse(localStorage.getItem("adife_2025_regs")||"[]");
+    prev.push({name:nameInput.value, uid:uidInput.value, selectedDays, timestamp: new Date().toISOString()});
+    localStorage.setItem("adife_2025_regs", JSON.stringify(prev));
+  } catch{}
 
-    if(data.status === "success") {
-      form.classList.add("hidden");
-      userName.textContent = nameInput.value;
-      userUID.textContent = uidInput.value;
-      userDays.innerHTML="";
-      selectedDays.slice().sort().forEach(id=>{
-        const li = document.createElement("li");
-        li.textContent = formatArabicDate(id);
-        userDays.appendChild(li);
-      });
-      successMessage.classList.remove("hidden");
-    } else {
-      alert("حدث خطأ أثناء إرسال البيانات: " + data.message);
-    }
-  } catch(err) {
-    alert("حدث خطأ أثناء إرسال البيانات. تأكد من رابط Google Sheet.");
-    console.error(err);
-  }
+  // Show success
+  form.classList.add("hidden");
+  userName.textContent=nameInput.value;
+  userUID.textContent=uidInput.value;
+  userDays.innerHTML="";
+  selectedDays.slice().sort().forEach(id=>{
+    const li=document.createElement("li");
+    li.textContent=formatArabicDate(id);
+    userDays.appendChild(li);
+  });
+  successMessage.classList.remove("hidden");
 });
 
 // Reset form
