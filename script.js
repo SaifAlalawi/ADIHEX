@@ -124,24 +124,7 @@ form.addEventListener("submit", e=>{
   // Remove duplicate days
   const uniqueDays = [...new Set(selectedDays)].sort();
 
-  // إرسال البيانات إلى Google Sheet
-fetch("https://script.google.com/macros/s/AKfycbzNz9mL_HReZLi71HjIV2ux_JS5jPIxo9tbnhfZhgPfsa1vEl8Q9AGpGj1bL4RyM-k/exec", {
-  method: "POST",
-  body: JSON.stringify({
-    name: nameInput.value,
-    uid: uidInput.value,
-    selectedDays: selectedDays
-  }),
-  headers: {
-    "Content-Type": "application/json"
-  }
-})
-.then(res => res.json())
-.then(data => console.log("تم الإرسال إلى Google Sheets:", data))
-.catch(err => console.error("خطأ في الإرسال:", err));
-
   
-
   // Show success
   form.classList.add("hidden");
   userName.textContent=nameInput.value;
@@ -190,7 +173,7 @@ finishBtn.addEventListener("click", ()=>{
   thankYou.innerHTML = `
     <p class="bold" style="font-size:1.4rem; margin-bottom:0.5rem; color:#065f46;">شكرًا لك على التسجيل!</p>
     <p style="color:#065f46; font-size:1rem;">
-      أهلًا وسهلًا في معرض أبوظبي الدولي للصيد والفروسية 2025. نتمنى لك تجربة ممتعة وشيقة!
+      أهلًا وسهلًا بك في معرض أبوظبي الدولي للصيد والفروسية 2025. نتمنى لك تجربة ممتعة وشيقة!
     </p>
   `;
 
