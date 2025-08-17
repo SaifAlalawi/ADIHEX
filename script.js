@@ -28,6 +28,7 @@ function buildEventDays() {
 }
 
 const daysList = buildEventDays();
+const EVENT_DAYS = daysList.map(d => d.id); // مصفوفة أيام الحدث بالترتيب
 
 // === DOM Elements ===
 const form = document.getElementById("registrationForm");
@@ -53,6 +54,7 @@ let selectedDays = [];
 
 // رابط Google Apps Script Web App
 const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwslwY0Qdm9uQ8q6ENaDKwrjYavDuxFquvxZ62Ra35SkrZcl-ZGo2vhxq6y_1TrgnQ/exec";
+const SHARED_SECRET = "CHANGE_ME_LONG_RANDOM_STRING"; // نفس المفتاح في السكربت
 
 // === Validation ===
 nameInput.addEventListener("input", ()=>{
@@ -91,7 +93,7 @@ daysList.forEach(d=>{
 // === Select all days ===
 allDaysCheckbox.addEventListener("change", ()=>{
   const checked = allDaysCheckbox.checked;
-  selectedDays = checked ? daysList.map(d=>d.id) : [];
+  selectedDays = checked ? EVENT_DAYS.slice() : [];
   document.querySelectorAll(".day-label input").forEach((c)=>{
     c.checked = checked;
     if(checked){
@@ -144,13 +146,11 @@ form.addEventListener("submit", async e=>{
 
   // --- بيانات الإرسال ---
   const formData = {
-    key: "CHANGE_ME_LONG_RANDOM_STRING", // نفس القيمة في Apps Script
+    key: SHARED_SECRET,
     name: nameInput.value,
     uid: uidInput.value,
     days: uniqueDays,
-    days_labels: uniqueDays.map(id => formatArabicDate(id)),
-    event: "ADIHEX 2025",
-    userAgent: navigator.userAgent
+    event: "ADIHEX 2025"
   };
 
   // تعطيل الزر مؤقتًا
@@ -162,7 +162,7 @@ form.addEventListener("submit", async e=>{
   // إرسال
   await sendToGoogleSheet(formData);
 
-  // إرجاع الزر لوضعه الطبيعي
+  // إعادة الزر لوضعه الطبيعي
   submitBtn.disabled = false;
   submitBtn.textContent = oldText;
 
