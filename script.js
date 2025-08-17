@@ -53,7 +53,7 @@ const finishBtn = document.getElementById("finishBtn");
 let selectedDays = [];
 
 // رابط Google Apps Script Web App
-const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwslwY0Qdm9uQ8q6ENaDKwrjYavDuxFquvxZ62Ra35SkrZcl-ZGo2vhxq6y_1TrgnQ/exec";
+const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyQaKQx5NfUu_Po3PZl9tmKr8qkuAKjesauCHgUI3a0hqm-3CslQbkRFXbeZl5RJQE/exec";
 const SHARED_SECRET = "CHANGE_ME_LONG_RANDOM_STRING"; // نفس المفتاح في السكربت
 
 // === Validation ===
