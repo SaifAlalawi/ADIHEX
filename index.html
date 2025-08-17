@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسجيل حضور — معرض أبوظبي للصيد والفروسية 2025</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/lucide-static@latest/dist/lucide.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="form-card">
+      <h1>تسجيل حضور — معرض أبوظبي للصيد والفروسية 2025</h1>
+      <div class="event-range">
+        <span>السبت 30 أغسطس 2025 — الأحد 7 سبتمبر 2025</span>
+      </div>
+      <p class="description">
+        الرجاء تعبئة البيانات التالية واختيار الأيام التي تود حضورها. هذا النموذج مخصص لطلبة الجامعة فقط.
+      </p>
+
+      <form id="registrationForm" class="form">
+        <div class="field">
+          <label>الاسم الكامل</label>
+          <input type="text" id="name" placeholder="اكتب اسمك هنا">
+          <p class="error" id="error-name"></p>
+        </div>
+
+        <div class="field">
+          <label>الرقم الجامعي</label>
+          <input type="text" id="uid" placeholder="مثال: 202012345">
+          <p class="error" id="error-uid"></p>
+        </div>
+
+        <div class="field">
+          <label>اختر الأيام التي ستحضرها</label>
+          <div id="daysContainer" class="days-grid"></div>
+          <p class="error" id="error-days"></p>
+        </div>
+
+        <div class="buttons">
+          <button type="button" id="resetBtn">مسح البيانات</button>
+          <button type="submit">تسجيل</button>
+        </div>
+      </form>
+
+      <div id="successMessage" class="success-message hidden">
+        <p class="bold">شكرًا لتسجيلك!</p>
+        <p>أهلًا وسهلًا بك يا <span id="userName"></span>. تم حفظ تسجيلك لحضور معرض أبوظبي للصيد والفروسية 2025 في الأيام التالية:</p>
+        <ul id="userDays"></ul>
+        <p>رقمك الجامعي: <span id="userUID"></span></p>
+        <div class="buttons">
+          <button id="newRegistrationBtn">تسجيل جديد</button>
+          <button id="finishBtn">إنهاء</button>
+        </div>
+      </div>
+
+      <div class="event-schedule">
+        مواعيد المعرض بالتفصيل:
+        <div id="eventDays"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
