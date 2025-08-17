@@ -1,0 +1,70 @@
+body {
+  font-family: "Tahoma", sans-serif;
+  background: #f6f6f6;
+  margin: 0;
+  padding: 0;
+  direction: rtl;
+  text-align: right;
+}
+
+.container {
+  max-width: 600px;
+  background: white;
+  margin: 40px auto;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+h1, h2 {
+  text-align: center;
+  color: #004080;
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.days {
+  margin: 15px 0;
+}
+
+.days label {
+  display: block;
+  margin: 5px 0;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #004080;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0066cc;
+}
+
+.hidden {
+  display: none;
+}
+
+#thankYouMessage {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 20px;
+  color: green;
+  font-weight: bold;
+}
