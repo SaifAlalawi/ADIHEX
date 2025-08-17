@@ -140,12 +140,7 @@ fetch("https://script.google.com/macros/s/AKfycbzNz9mL_HReZLi71HjIV2ux_JS5jPIxo9
 .then(data => console.log("تم الإرسال إلى Google Sheets:", data))
 .catch(err => console.error("خطأ في الإرسال:", err));
 
-  // Save locally
-  try {
-    const prev = JSON.parse(localStorage.getItem("adife_2025_regs")||"[]");
-    prev.push({name:nameInput.value, uid:uidInput.value, selectedDays: uniqueDays, timestamp: new Date().toISOString()});
-    localStorage.setItem("adife_2025_regs", JSON.stringify(prev));
-  } catch{}
+  
 
   // Show success
   form.classList.add("hidden");
