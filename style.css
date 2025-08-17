@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+body {
+  font-family: 'Cairo', sans-serif;
+  background: linear-gradient(to bottom, #f8fafc, #f1f5f9);
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.form-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+  border: 1px solid #e2e8f0;
+  max-width: 700px;
+  width: 100%;
+  padding: 2rem;
+}
+
+h1 {
+  font-size: 2rem;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+
+.event-range {
+  color: #475569;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.description {
+  color: #475569;
+  margin-bottom: 1.5rem;
+}
+
+.field {
+  margin-bottom: 1rem;
+}
+
+.field label {
+  display: block;
+  font-size: 0.9rem;
+  color: #334155;
+  margin-bottom: 0.3rem;
+}
+
+.field input[type="text"] {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  outline: none;
+  font-size: 0.95rem;
+}
+
+.field input[type="text"]:focus {
+  border-color: #64748b;
+  box-shadow: 0 0 0 2px rgba(100,116,139,0.2);
+}
+
+.error {
+  color: #f43f5e;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+.days-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.day-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.day-label input {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.day-label.selected {
+  border-color: #334155;
+  background-color: #f1f5f9;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+button[type="submit"] {
+  background-color: #1e293b;
+  color: white;
+}
+
+button[type="submit"]:hover {
+  background-color: #0f172a;
+}
+
+button#resetBtn {
+  background-color: #fff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+}
+
+button#resetBtn:hover {
+  background-color: #f1f5f9;
+}
+
+.success-message {
+  background-color: #dcfce7;
+  border: 1px solid #bbf7d0;
+  padding: 1rem;
+  border-radius: 20px;
+}
+
+.success-message p.bold {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.event-schedule {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+.event-schedule div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+}
+
+.event-schedule span {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.event-schedule .dot {
+  width: 5px;
+  height: 5px;
+  background-color: #94a3b8;
+  border-radius: 50%;
+}
