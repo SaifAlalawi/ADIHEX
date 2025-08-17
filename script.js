@@ -49,6 +49,16 @@ const finishBtn = document.getElementById("finishBtn");
 
 let selectedDays = [];
 
+// Validate name (letters only)
+nameInput.addEventListener("input", ()=>{
+  nameInput.value = nameInput.value.replace(/[^a-zA-Z\u0600-\u06FF\s]/g,'');
+});
+
+// Validate UID (numbers only)
+uidInput.addEventListener("input", ()=>{
+  uidInput.value = uidInput.value.replace(/\D/g,'');
+});
+
 // Render days labels (بدون مربعات، مع علامة ✔ على اليسار)
 daysList.forEach(d=>{
   const label = document.createElement("label");
@@ -111,10 +121,13 @@ form.addEventListener("submit", e=>{
 
   if(!valid) return;
 
+  // Remove duplicate days
+  const uniqueDays = [...new Set(selectedDays)].sort();
+
   // Save locally
   try {
     const prev = JSON.parse(localStorage.getItem("adife_2025_regs")||"[]");
-    prev.push({name:nameInput.value, uid:uidInput.value, selectedDays, timestamp: new Date().toISOString()});
+    prev.push({name:nameInput.value, uid:uidInput.value, selectedDays: uniqueDays, timestamp: new Date().toISOString()});
     localStorage.setItem("adife_2025_regs", JSON.stringify(prev));
   } catch{}
 
@@ -123,7 +136,7 @@ form.addEventListener("submit", e=>{
   userName.textContent=nameInput.value;
   userUID.textContent=uidInput.value;
   userDays.innerHTML="";
-  selectedDays.slice().sort().forEach(id=>{
+  uniqueDays.forEach(id=>{
     const li=document.createElement("li");
     li.textContent=formatArabicDate(id);
     userDays.appendChild(li);
@@ -151,7 +164,7 @@ newRegistrationBtn.addEventListener("click", ()=>{
   resetBtn.click();
 });
 
-// Finish button
+// Finish button - show thank you message
 finishBtn.addEventListener("click", ()=>{
   form.classList.add("hidden");
   successMessage.classList.add("hidden");
@@ -160,10 +173,13 @@ finishBtn.addEventListener("click", ()=>{
   thankYou.className = "success-message";
   thankYou.style.textAlign = "center";
   thankYou.style.padding = "2rem";
+  thankYou.style.backgroundColor = "#dcfce7";
+  thankYou.style.border = "1px solid #bbf7d0";
+  thankYou.style.borderRadius = "20px";
   thankYou.innerHTML = `
-    <p class="bold" style="font-size:1.4rem; margin-bottom:0.5rem;">شكرًا لك على التسجيل!</p>
-    <p style="color:#1e293b; font-size:1rem;">
-      أهلًا وسهلًا بك في معرض أبوظبي الدولي للصيد والفروسية 2025. نتمنى لك تجربة ممتعة وشيقة!
+    <p class="bold" style="font-size:1.4rem; margin-bottom:0.5rem; color:#065f46;">شكرًا لك على التسجيل!</p>
+    <p style="color:#065f46; font-size:1rem;">
+      أهلًا وسهلًا بك في معرض أبوظبي للصيد والفروسية 2025. نتمنى لك تجربة ممتعة وشيقة!
     </p>
   `;
 
