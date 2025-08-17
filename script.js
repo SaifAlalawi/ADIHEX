@@ -124,6 +124,22 @@ form.addEventListener("submit", e=>{
   // Remove duplicate days
   const uniqueDays = [...new Set(selectedDays)].sort();
 
+  // إرسال البيانات إلى Google Sheet
+fetch("https://script.google.com/macros/s/AKfycbzNz9mL_HReZLi71HjIV2ux_JS5jPIxo9tbnhfZhgPfsa1vEl8Q9AGpGj1bL4RyM-k/exec", {
+  method: "POST",
+  body: JSON.stringify({
+    name: nameInput.value,
+    uid: uidInput.value,
+    selectedDays: selectedDays
+  }),
+  headers: {
+    "Content-Type": "application/json"
+  }
+})
+.then(res => res.json())
+.then(data => console.log("تم الإرسال إلى Google Sheets:", data))
+.catch(err => console.error("خطأ في الإرسال:", err));
+
   // Save locally
   try {
     const prev = JSON.parse(localStorage.getItem("adife_2025_regs")||"[]");
