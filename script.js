@@ -144,6 +144,7 @@ form.addEventListener("submit", async e=>{
 
   // --- بيانات الإرسال ---
   const formData = {
+    key: "CHANGE_ME_LONG_RANDOM_STRING", // نفس القيمة في Apps Script
     name: nameInput.value,
     uid: uidInput.value,
     days: uniqueDays,
