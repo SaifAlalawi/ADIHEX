@@ -1,4 +1,4 @@
-const GOOGLE_SHEET_URL = "ضع هنا رابط الـ Web App النهائي من Google Apps Script";
+const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbxjfYHlC51ypN-_gQdHqFgvOmImDnRNftKKoktZMw/dev";
 
 const arabicMonths = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
 const arabicWeekdays = ["الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت","الأحد"];
