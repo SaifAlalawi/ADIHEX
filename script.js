@@ -1,4 +1,4 @@
-const GOOGLE_SHEET_URL = "ضع هنا رابط Web App النهائي من Google Apps Script";
+const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbzNz9mL_HReZLi71HjIV2ux_JS5jPIxo9tbnhfZhgPfsa1vEl8Q9AGpGj1bL4RyM-k/exec";
 
 const arabicMonths = [
   "يناير","فبراير","مارس","أبريل","مايو","يونيو",
