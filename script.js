@@ -50,7 +50,7 @@ const finishBtn = document.getElementById("finishBtn");
 let selectedDays = [];
 
 // ضع هنا رابط Web App الخاص بـ Google Apps Script
-const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzNz9mL_HReZLi71HjIV2ux_JS5jPIxo9tbnhfZhgPfsa1vEl8Q9AGpGj1bL4RyM-k/exec";
+const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxlkmCaetcLkHoa9K5vGF1D7ocQejT-qcLh6VhpAUkIz-kb0DLbRCeQDncysuD9ppY/exec";
 
 // --- Validation ---
 nameInput.addEventListener("input", ()=>{
