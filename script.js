@@ -49,17 +49,19 @@ const finishBtn = document.getElementById("finishBtn");
 
 let selectedDays = [];
 
-// Validate name (letters only)
+// ضع هنا رابط Web App الخاص بـ Google Apps Script
+const GOOGLE_SHEET_WEB_APP_URL = "ضع_هنا_رابط_Web_App";
+
+// --- Validation ---
 nameInput.addEventListener("input", ()=>{
   nameInput.value = nameInput.value.replace(/[^a-zA-Z\u0600-\u06FF\s]/g,'');
 });
 
-// Validate UID (numbers only)
 uidInput.addEventListener("input", ()=>{
   uidInput.value = uidInput.value.replace(/\D/g,'');
 });
 
-// Render days labels (بدون مربعات، مع علامة ✔ على اليسار)
+// --- Render days ---
 daysList.forEach(d=>{
   const label = document.createElement("label");
   label.className="day-label";
@@ -84,7 +86,7 @@ daysList.forEach(d=>{
   daysContainer.appendChild(label);
 });
 
-// اختيار كل الأيام
+// --- Select all days ---
 allDaysCheckbox.addEventListener("change", ()=>{
   const checked = allDaysCheckbox.checked;
   selectedDays = checked ? daysList.map(d=>d.id) : [];
@@ -98,7 +100,25 @@ allDaysCheckbox.addEventListener("change", ()=>{
   });
 });
 
-// Form submit
+// --- Send data to Google Sheets ---
+function sendToGoogleSheet(data){
+  fetch(GOOGLE_SHEET_WEB_APP_URL, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  .then(res=>res.json())
+  .then(result=>{
+    console.log("Google Sheets response:", result);
+  })
+  .catch(err=>{
+    console.error("Error sending to Google Sheets:", err);
+  });
+}
+
+// --- Form submit ---
 form.addEventListener("submit", e=>{
   e.preventDefault();
   let valid = true;
@@ -118,14 +138,19 @@ form.addEventListener("submit", e=>{
     errorDays.textContent="اختر يومًا واحدًا على الأقل";
     valid=false;
   }
-
   if(!valid) return;
 
-  // Remove duplicate days
   const uniqueDays = [...new Set(selectedDays)].sort();
 
-  
-  // Show success
+  // --- إرسال البيانات ---
+  const formData = {
+    name: nameInput.value,
+    uid: uidInput.value,
+    days: uniqueDays
+  };
+  sendToGoogleSheet(formData);
+
+  // --- Show success message ---
   form.classList.add("hidden");
   userName.textContent=nameInput.value;
   userUID.textContent=uidInput.value;
@@ -138,7 +163,7 @@ form.addEventListener("submit", e=>{
   successMessage.classList.remove("hidden");
 });
 
-// Reset form
+// --- Reset form ---
 resetBtn.addEventListener("click", ()=>{
   nameInput.value="";
   uidInput.value="";
@@ -151,14 +176,14 @@ resetBtn.addEventListener("click", ()=>{
   errorDays.textContent="";
 });
 
-// New registration
+// --- New registration ---
 newRegistrationBtn.addEventListener("click", ()=>{
   successMessage.classList.add("hidden");
   form.classList.remove("hidden");
   resetBtn.click();
 });
 
-// Finish button - show thank you message
+// --- Finish button ---
 finishBtn.addEventListener("click", ()=>{
   form.classList.add("hidden");
   successMessage.classList.add("hidden");
