@@ -46,9 +46,9 @@ h1 {
   margin-bottom: 1rem;
 }
 
-/* تعديل عرض الحقول ليصبح أضيق */
-.field input[type="text"] {
-  width: 60%;
+/* تعديل عرض الحقول ليصبح أقصر */
+.field.narrow input[type="text"] {
+  width: 60%; /* عرض أقصر */
   padding: 0.5rem 0.75rem;
   border-radius: 12px;
   border: 1px solid #cbd5e1;
@@ -79,6 +79,13 @@ h1 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
+}
+
+/* الأيام عمودية على الشاشات الصغيرة */
+@media (max-width: 600px) {
+  .days-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .day-label {
