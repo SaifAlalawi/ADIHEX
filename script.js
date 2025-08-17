@@ -163,7 +163,7 @@ finishBtn.addEventListener("click", ()=>{
   thankYou.innerHTML = `
     <p class="bold" style="font-size:1.4rem; margin-bottom:0.5rem;">شكرًا لك على التسجيل!</p>
     <p style="color:#1e293b; font-size:1rem;">
-      أهلًا وسهلًا بك في معرض أبوظبي للصيد والفروسية 2025. نتمنى لك تجربة ممتعة وشيقة!
+      أهلًا وسهلًا بك في معرض أبوظبي الدولي للصيد والفروسية 2025. نتمنى لك تجربة ممتعة وشيقة!
     </p>
   `;
 
