@@ -14,21 +14,27 @@
       <div class="event-range">
         <span>السبت 30 أغسطس 2025 — الأحد 7 سبتمبر 2025</span>
       </div>
+
       <p class="description">
-        الرجاء تعبئة البيانات التالية واختيار الأيام التي تود حضورها. هذا النموذج مخصص لطلبة الجامعة فقط.
+        الرجاء تعبئة البيانات التالية واختيار الأيام التي تود حضورها.
       </p>
 
       <form id="registrationForm" class="form">
-        <div class="field">
+        <div class="field narrow">
           <label>الاسم الكامل</label>
           <input type="text" id="name" placeholder="اكتب اسمك هنا">
           <p class="error" id="error-name"></p>
         </div>
 
-        <div class="field">
+        <div class="field narrow">
           <label>الرقم الجامعي</label>
           <input type="text" id="uid" placeholder="مثال: 202012345">
           <p class="error" id="error-uid"></p>
+        </div>
+
+        <div class="field">
+          <label>أريد حضور جميع الأيام</label>
+          <input type="checkbox" id="allDays">
         </div>
 
         <div class="field">
@@ -52,11 +58,6 @@
           <button id="newRegistrationBtn">تسجيل جديد</button>
           <button id="finishBtn">إنهاء</button>
         </div>
-      </div>
-
-      <div class="event-schedule">
-        مواعيد المعرض بالتفصيل:
-        <div id="eventDays"></div>
       </div>
     </div>
   </div>
