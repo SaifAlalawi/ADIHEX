@@ -32,6 +32,7 @@ const form = document.getElementById("registrationForm");
 const nameInput = document.getElementById("name");
 const uidInput = document.getElementById("uid");
 const daysContainer = document.getElementById("daysContainer");
+const allDaysCheckbox = document.getElementById("allDays");
 
 const errorName = document.getElementById("error-name");
 const errorUID = document.getElementById("error-uid");
@@ -45,16 +46,16 @@ const userDays = document.getElementById("userDays");
 const resetBtn = document.getElementById("resetBtn");
 const newRegistrationBtn = document.getElementById("newRegistrationBtn");
 const finishBtn = document.getElementById("finishBtn");
-const eventDaysDiv = document.getElementById("eventDays");
 
 let selectedDays = [];
 
-// Render days checkboxes
+// Render days labels (بدون مربعات، مع علامة ✔ على اليسار)
 daysList.forEach(d=>{
   const label = document.createElement("label");
   label.className="day-label";
-  label.innerHTML = `<span>${d.label}</span><input type="checkbox" value="${d.id}">`;
+  label.innerHTML = `<span>${d.label}</span><input type="checkbox" value="${d.id}" style="display:none">`;
   const checkbox = label.querySelector("input");
+
   checkbox.addEventListener("change", ()=>{
     if(checkbox.checked){
       selectedDays.push(d.id);
@@ -64,16 +65,30 @@ daysList.forEach(d=>{
       label.classList.remove("selected");
     }
   });
+
+  label.addEventListener("click", ()=>{
+    checkbox.checked = !checkbox.checked;
+    checkbox.dispatchEvent(new Event('change'));
+  });
+
   daysContainer.appendChild(label);
 });
 
-// Render event schedule
-daysList.forEach(d=>{
-  const div = document.createElement("div");
-  div.innerHTML = `<span class="dot"></span><span>${d.label}</span>`;
-  eventDaysDiv.appendChild(div);
+// اختيار كل الأيام
+allDaysCheckbox.addEventListener("change", ()=>{
+  const checked = allDaysCheckbox.checked;
+  selectedDays = checked ? daysList.map(d=>d.id) : [];
+  document.querySelectorAll(".day-label input").forEach((c, i)=>{
+    c.checked = checked;
+    if(checked){
+      c.parentElement.classList.add("selected");
+    } else {
+      c.parentElement.classList.remove("selected");
+    }
+  });
 });
 
+// Form submit
 form.addEventListener("submit", e=>{
   e.preventDefault();
   let valid = true;
@@ -116,10 +131,12 @@ form.addEventListener("submit", e=>{
   successMessage.classList.remove("hidden");
 });
 
+// Reset form
 resetBtn.addEventListener("click", ()=>{
   nameInput.value="";
   uidInput.value="";
   selectedDays=[];
+  allDaysCheckbox.checked = false;
   document.querySelectorAll(".day-label input").forEach(c=>c.checked=false);
   document.querySelectorAll(".day-label").forEach(l=>l.classList.remove("selected"));
   errorName.textContent="";
@@ -127,12 +144,15 @@ resetBtn.addEventListener("click", ()=>{
   errorDays.textContent="";
 });
 
+// New registration
 newRegistrationBtn.addEventListener("click", ()=>{
   successMessage.classList.add("hidden");
   form.classList.remove("hidden");
   resetBtn.click();
 });
 
+// Finish
 finishBtn.addEventListener("click", ()=>{
   window.location.reload();
 });
+
