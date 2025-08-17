@@ -78,7 +78,7 @@ daysList.forEach(d=>{
 allDaysCheckbox.addEventListener("change", ()=>{
   const checked = allDaysCheckbox.checked;
   selectedDays = checked ? daysList.map(d=>d.id) : [];
-  document.querySelectorAll(".day-label input").forEach((c, i)=>{
+  document.querySelectorAll(".day-label input").forEach((c)=>{
     c.checked = checked;
     if(checked){
       c.parentElement.classList.add("selected");
@@ -151,8 +151,23 @@ newRegistrationBtn.addEventListener("click", ()=>{
   resetBtn.click();
 });
 
-// Finish
+// Finish button
 finishBtn.addEventListener("click", ()=>{
-  window.location.reload();
-});
+  form.classList.add("hidden");
+  successMessage.classList.add("hidden");
 
+  const thankYou = document.createElement("div");
+  thankYou.className = "success-message";
+  thankYou.style.textAlign = "center";
+  thankYou.style.padding = "2rem";
+  thankYou.innerHTML = `
+    <p class="bold" style="font-size:1.4rem; margin-bottom:0.5rem;">شكرًا لك على التسجيل!</p>
+    <p style="color:#1e293b; font-size:1rem;">
+      أهلًا وسهلًا بك في معرض أبوظبي للصيد والفروسية 2025. نتمنى لك تجربة ممتعة وشيقة!
+    </p>
+  `;
+
+  const container = document.querySelector(".container");
+  container.innerHTML = "";
+  container.appendChild(thankYou);
+});
