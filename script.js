@@ -1,3 +1,4 @@
+// === Arabic months & weekdays ===
 const arabicMonths = [
   "يناير","فبراير","مارس","أبريل","مايو","يونيو",
   "يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"
@@ -28,6 +29,7 @@ function buildEventDays() {
 
 const daysList = buildEventDays();
 
+// === DOM Elements ===
 const form = document.getElementById("registrationForm");
 const nameInput = document.getElementById("name");
 const uidInput = document.getElementById("uid");
@@ -49,10 +51,10 @@ const finishBtn = document.getElementById("finishBtn");
 
 let selectedDays = [];
 
-// ضع هنا رابط Web App الخاص بـ Google Apps Script
-const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxlkmCaetcLkHoa9K5vGF1D7ocQejT-qcLh6VhpAUkIz-kb0DLbRCeQDncysuD9ppY/exec";
+// رابط Google Apps Script Web App
+const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwslwY0Qdm9uQ8q6ENaDKwrjYavDuxFquvxZ62Ra35SkrZcl-ZGo2vhxq6y_1TrgnQ/exec";
 
-// --- Validation ---
+// === Validation ===
 nameInput.addEventListener("input", ()=>{
   nameInput.value = nameInput.value.replace(/[^a-zA-Z\u0600-\u06FF\s]/g,'');
 });
@@ -61,7 +63,7 @@ uidInput.addEventListener("input", ()=>{
   uidInput.value = uidInput.value.replace(/\D/g,'');
 });
 
-// --- Render days ---
+// === Render days ===
 daysList.forEach(d=>{
   const label = document.createElement("label");
   label.className="day-label";
@@ -86,7 +88,7 @@ daysList.forEach(d=>{
   daysContainer.appendChild(label);
 });
 
-// --- Select all days ---
+// === Select all days ===
 allDaysCheckbox.addEventListener("change", ()=>{
   const checked = allDaysCheckbox.checked;
   selectedDays = checked ? daysList.map(d=>d.id) : [];
@@ -100,26 +102,24 @@ allDaysCheckbox.addEventListener("change", ()=>{
   });
 });
 
-// --- Send data to Google Sheets ---
-function sendToGoogleSheet(data){
-  fetch(GOOGLE_SHEET_WEB_APP_URL, {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
-  .then(res=>res.json())
-  .then(result=>{
-    console.log("Google Sheets response:", result);
-  })
-  .catch(err=>{
+// === Send data to Google Sheets ===
+async function sendToGoogleSheet(data){
+  try {
+    const res = await fetch(GOOGLE_SHEET_WEB_APP_URL, {
+      method: "POST",
+      redirect: "follow",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(data)
+    });
+    console.log("Data sent to Google Sheets");
+  } catch (err) {
     console.error("Error sending to Google Sheets:", err);
-  });
+    alert("تعذّر حفظ البيانات. حاول مرة أخرى.");
+  }
 }
 
-// --- Form submit ---
-form.addEventListener("submit", e=>{
+// === Form submit ===
+form.addEventListener("submit", async e=>{
   e.preventDefault();
   let valid = true;
   errorName.textContent = "";
@@ -142,13 +142,28 @@ form.addEventListener("submit", e=>{
 
   const uniqueDays = [...new Set(selectedDays)].sort();
 
-  // --- إرسال البيانات ---
+  // --- بيانات الإرسال ---
   const formData = {
     name: nameInput.value,
     uid: uidInput.value,
-    days: uniqueDays
+    days: uniqueDays,
+    days_labels: uniqueDays.map(id => formatArabicDate(id)),
+    event: "ADIHEX 2025",
+    userAgent: navigator.userAgent
   };
-  sendToGoogleSheet(formData);
+
+  // تعطيل الزر مؤقتًا
+  const submitBtn = form.querySelector('button[type="submit"]');
+  submitBtn.disabled = true;
+  const oldText = submitBtn.textContent;
+  submitBtn.textContent = "جارٍ الحفظ...";
+
+  // إرسال
+  await sendToGoogleSheet(formData);
+
+  // إرجاع الزر لوضعه الطبيعي
+  submitBtn.disabled = false;
+  submitBtn.textContent = oldText;
 
   // --- Show success message ---
   form.classList.add("hidden");
@@ -163,7 +178,7 @@ form.addEventListener("submit", e=>{
   successMessage.classList.remove("hidden");
 });
 
-// --- Reset form ---
+// === Reset form ===
 resetBtn.addEventListener("click", ()=>{
   nameInput.value="";
   uidInput.value="";
@@ -176,14 +191,14 @@ resetBtn.addEventListener("click", ()=>{
   errorDays.textContent="";
 });
 
-// --- New registration ---
+// === New registration ===
 newRegistrationBtn.addEventListener("click", ()=>{
   successMessage.classList.add("hidden");
   form.classList.remove("hidden");
   resetBtn.click();
 });
 
-// --- Finish button ---
+// === Finish button ===
 finishBtn.addEventListener("click", ()=>{
   form.classList.add("hidden");
   successMessage.classList.add("hidden");
